@@ -1,0 +1,127 @@
+import React, { useState, useEffect } from 'react';
+import { m2mService } from '../services/m2m.service';
+
+export const LoanCalculator: React.FC = () => {
+  const [amount, setAmount] = useState(50000);
+  const [term, setTerm] = useState(60);
+  const [loading, setLoading] = useState(false);
+  const [offers, setOffers] = useState<any[]>([]);
+  const [statusMsg, setStatusMsg] = useState('');
+  
+  // Zmienne do licznika FOMO
+  const [timeLeft, setTimeLeft] = useState(900); 
+  const [timerActive, setTimerActive] = useState(false);
+
+  const statusSteps = [
+    "Inicjalizacja protokołu CashMaker...",
+    "Skanowanie baz bankowych (M2M)...",
+    "Analiza Twojego profilu ryzyka...",
+    "Generowanie bezpiecznego linku..."
+  ];
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+    if (timerActive && timeLeft > 0) {
+      interval = setInterval(() => {
+        setTimeLeft(prev => prev - 1);
+      }, 1000);
+    } else if (timeLeft === 0 && interval) {
+      clearInterval(interval);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [timerActive, timeLeft]);
+
+  const formatTime = (seconds: number) => {
+    const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const s = (seconds % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+  };
+
+  const handleCalculate = async () => {
+    setLoading(true);
+    setOffers([]);
+    setTimerActive(false);
+    
+    for (let i = 0; i < statusSteps.length; i++) {
+      setStatusMsg(statusSteps[i]);
+      await new Promise(resolve => setTimeout(resolve, 800));
+    }
+
+    const results = await m2mService.getLoanOffers(amount, term, 0);
+    setOffers(results || []);
+    setLoading(false);
+    
+    // Uruchomienie licznika po pokazaniu oferty
+    setTimeLeft(900);
+    setTimerActive(true);
+  };
+
+  return (
+    <div className="max-w-4xl mx-auto p-6 bg-black text-white border border-zinc-800 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,1)]">
+      <h2 className="text-4xl font-black text-center mb-10 tracking-tighter uppercase italic">
+        System <span className="text-red-600">#CashMaker</span>
+      </h2>
+
+      <div className="grid md:grid-cols-2 gap-8 mb-10">
+        <div className="bg-zinc-900 p-8 rounded-xl border-t border-zinc-800">
+          <p className="text-[10px] uppercase tracking-[0.3em] text-zinc-500 mb-2 font-bold">Kapitał operacyjny</p>
+          <p className="text-3xl font-black mb-4 text-red-600">{amount.toLocaleString()} PLN</p>
+          <input type="range" min="1000" max="250000" step="1000" value={amount} onChange={(e) => setAmount(Number(e.target.value))}
+            className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-red-600" />
+        </div>
+
+        <div className="bg-zinc-900 p-8 rounded-xl border-t border-zinc-800">
+          <p className="text-[10px] uppercase tracking-[0.3em] text-zinc-500 mb-2 font-bold">Horyzont czasowy</p>
+          <p className="text-3xl font-black mb-4 text-red-600">{term} m-cy</p>
+          <input type="range" min="3" max="120" value={term} onChange={(e) => setTerm(Number(e.target.value))}
+            className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-red-600" />
+        </div>
+      </div>
+
+      <button 
+        onClick={handleCalculate}
+        disabled={loading}
+        className={`w-full py-6 rounded-xl font-black text-2xl tracking-widest uppercase transition-all duration-700 
+          ${loading ? 'bg-zinc-800 text-zinc-500' : 'bg-red-600 hover:bg-red-500 animate-pulse shadow-[0_0_30px_rgba(220,38,38,0.4)]'}`}
+      >
+        {loading ? statusMsg : "🔥 Uruchom Analizę Ekspercką"}
+      </button>
+
+      <div className="mt-12">
+        {offers.map((offer, idx) => (
+          <div key={idx} className="bg-white text-black p-10 rounded-2xl transform hover:scale-[1.01] transition-all border-4 border-red-600 relative overflow-hidden">
+            
+            {/* AGRESYWNY LICZNIK FOMO */}
+            <div className="bg-red-900/10 border-b-2 border-red-600 -mt-10 -mx-10 mb-8 p-4 text-center animate-pulse">
+              <p className="text-red-600 text-[10px] font-black uppercase tracking-widest mb-1">Warunki Premium przypisane do Twojego IP</p>
+              <p className="text-black text-2xl font-black uppercase">Okno transferowe wygasa za: <span className="text-red-600">{formatTime(timeLeft)}</span></p>
+            </div>
+
+            <div className="flex justify-between items-start mb-6">
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-widest text-red-600 mb-1">Dopasowanie: 100%</p>
+                <h3 className="text-4xl font-black uppercase leading-none">{offer.name}</h3>
+              </div>
+              <div className="bg-black text-white px-4 py-2 text-xs font-black uppercase rotate-3 shadow-lg">Premium</div>
+            </div>
+            
+            <p className="text-gray-500 font-medium mb-8 max-w-md text-sm">
+              Nasz algorytm zweryfikował tę ofertę jako jedyną spełniającą elitarne parametry. Zastrzegamy prawo do zmiany warunków po upływie czasu.
+            </p>
+
+            <a 
+              href={offer.url} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="block w-full bg-black text-white text-center py-5 rounded-lg font-black text-xl hover:bg-red-600 transition-all uppercase tracking-tighter"
+            >
+              Przejdź do wypłaty środków
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
