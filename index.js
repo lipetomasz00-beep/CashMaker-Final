@@ -7,24 +7,21 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-console.log("------------------------------------");
-console.log("🚀 CASHMAKER API: INICJALIZACJA...");
-console.log("------------------------------------");
-
 app.post('/api/oferta', async (req, res) => {
     const { kwota, okres, zrodlo, bik } = req.body;
     console.log(`\n🔔 LEAD: ${kwota}PLN / ${okres}msc / BIK: ${bik.toUpperCase()} / Dochód: ${zrodlo.toUpperCase()}`);
     
-    // Twarda logika algorytmu
-    let kategoria = '/kredyty-gotowkowe'; 
-    
-    if (bik === 'negatywny') {
-        // Klient z opóźnieniami - omijamy banki, uderzamy w sektor pozabankowy
-        kategoria = '/chwilowki';
-    } else if (kwota <= 5000) {
-        kategoria = '/chwilowki';
-    } else if (kwota > 5000 && kwota <= 20000) {
-        kategoria = '/pozyczki';
+    let path = '/kredyty-gotowkowe'; 
+    switch(category) {
+        case 'gotowka': path = (bik === 'negatywny' || kwota <= 5000) ? '/chwilowki' : '/kredyty-gotowkowe'; break;
+        case 'konsolidacja': path = '/kredyty-konsolidacyjne'; break;
+        case 'firma': path = '/produkty-dla-firm'; break;
+        case 'konta-firmowe': path = '/konta-firmowe'; break;
+        case 'hipoteka': path = '/kredyty-hipoteczne'; break;
+        case 'karty': path = '/karty-kredytowe'; break;
+        case 'ubezpieczenia': path = '/ubezpieczenia'; break;
+        case 'premia': path = '/konta-osobiste'; break;
+        default: path = '/kredyty-gotowkowe';
     }
 
     const urlDocelowy = `https://toomasz-money.oferty-kredytowe.pl${kategoria}`;
