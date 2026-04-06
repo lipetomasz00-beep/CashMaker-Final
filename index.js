@@ -70,6 +70,5 @@ app.post('/api/oferta', async (req, res) => {
         console.log(`✅ ZNALEZIONO OFERT: ${wszystkieLinki.length}. WYBRANO LINK NR: ${indexOferty}`);
         
         res.status(200).json({ status: "SUKCES", link_docelowy: precyzyjnyLink });
-
-    } catch (*
+     } catch {)
 
