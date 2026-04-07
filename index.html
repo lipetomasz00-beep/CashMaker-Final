@@ -171,8 +171,9 @@ function goOffer(){
   const amount = document.getElementById("amount").value
   const time = document.getElementById("time").value
   const score = document.getElementById("score").value
-
-  window.location.href =
+  const age = document.getElementById("age").value
+ 
+  window.location.href ="http://localhost:3000/?age=" + age
     "/?goal="+goal+"&amount="+amount+"&time="+time+"&score="+score
 }
 
