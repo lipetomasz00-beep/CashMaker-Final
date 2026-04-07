@@ -1,0 +1,607 @@
+<div class="w-full h-full flex flex-col items-center justify-center font-sans relative">
+  
+  <div class="w-full h-full flex flex-col justify-center p-4 relative overflow-hidden">
+    
+    <!-- Subtelny czerwony glow w tle karty -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-red-600/10 blur-[60px] pointer-events-none"></div>
+
+    <div class="text-center pt-2 pb-1 sm:pt-10 sm:pb-2">
+      @if (!funnelType()) {
+        <h1 class="flex flex-col gap-0 mb-2 tracking-tight">
+          <span class="text-3xl sm:text-4xl font-black text-white uppercase leading-none">FINANCIAL FREEDOM</span>
+          <span class="text-xl sm:text-2xl font-bold italic text-[#FF0000] leading-none">My to Twój Finansowy Sukces</span>
+        </h1>
+        <p class="text-zinc-400 text-xs sm:text-sm max-w-xs mx-auto leading-tight mb-2">
+          Poznaj oferty dzięki którym zyskasz Ty. Nie jak dotychczas tylko bank.
+        </p>
+      } @else {
+        <h2 class="text-lg sm:text-2xl font-bold text-zinc-100 tracking-tight">
+          SKALIBRUJ SYSTEM POD SWÓJ PROFIL.
+        </h2>
+      }
+    </div>
+
+    <!-- Etap 0: Ekran Mikrodecyzji - Agresywne przyciski -->
+    @if (step() === 0) {
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4 animate-in fade-in duration-500">
+        <!-- Kafel 1: SZYBKA GOTÓWKA -->
+        <button 
+          (click)="initFunnel('GOTÓWKA', 150000, ['Kredyt gotówkowy', 'Pożyczka online', 'Chwilówka'])"
+          class="flex flex-col items-center justify-center p-2 sm:p-6 bg-zinc-950 hover:bg-black border border-red-900/50 hover:border-red-500 text-white rounded-xl transition-all group h-28 sm:h-40"
+        >
+          <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-red-900/20 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+            </svg>
+          </div>
+          <span class="font-bold text-[11px] sm:text-sm uppercase tracking-tight text-center leading-tight">Szybka Gotówka</span>
+        </button>
+
+        <!-- Kafel 2: PREMIA OD BANKU -->
+        <button 
+          (click)="initFunnel('PREMIA', 10000, ['Konto osobiste'])"
+          class="flex flex-col items-center justify-center p-2 sm:p-6 bg-zinc-950 hover:bg-black border border-red-900/50 hover:border-red-500 text-white rounded-xl transition-all group h-28 sm:h-40"
+        >
+          <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-red-900/20 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500">
+              <path d="M3 21h18"></path>
+              <path d="M3 10h18"></path>
+              <path d="M5 6l7-3 7 3"></path>
+              <path d="M4 10v11"></path>
+              <path d="M20 10v11"></path>
+              <path d="M8 14v3"></path>
+              <path d="M12 14v3"></path>
+              <path d="M16 14v3"></path>
+            </svg>
+          </div>
+          <span class="font-bold text-[11px] sm:text-sm uppercase tracking-tight text-center leading-tight">Premia od Banku</span>
+        </button>
+
+        <!-- Kafel 3: DLA FIRM -->
+        <button 
+          (click)="initFunnel('FIRMA', 500000, ['Konto dla firm', 'Kredyt dla firm'])"
+          class="flex flex-col items-center justify-center p-2 sm:p-6 bg-zinc-950 hover:bg-black border border-red-900/50 hover:border-red-500 text-white rounded-xl transition-all group h-28 sm:h-40"
+        >
+          <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-red-900/20 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+            </svg>
+          </div>
+          <span class="font-bold text-[11px] sm:text-sm uppercase tracking-tight text-center leading-tight">DLA FIRM</span>
+        </button>
+
+        <!-- Kafel 4: KONSOLIDACJA -->
+        <button 
+          (click)="initFunnel('KONSOLIDACJA', 300000, ['Kredyt konsolidacyjny'])"
+          class="flex flex-col items-center justify-center p-2 sm:p-6 bg-zinc-950 hover:bg-black border border-red-900/50 hover:border-red-500 text-white rounded-xl transition-all group h-28 sm:h-40"
+        >
+          <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-red-900/20 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <line x1="12" y1="8" x2="12" y2="16"></line>
+              <line x1="8" y1="12" x2="16" y2="12"></line>
+            </svg>
+          </div>
+          <span class="font-bold text-[11px] sm:text-sm uppercase tracking-tight text-center leading-tight">KONSOLIDACJA</span>
+        </button>
+
+        <!-- Kafel 5: KARTY KREDYTOWE -->
+        <button 
+          (click)="initFunnel('KARTA', 50000, ['Karta kredytowa'])"
+          class="flex flex-col items-center justify-center p-2 sm:p-6 bg-zinc-950 hover:bg-black border border-red-900/50 hover:border-red-500 text-white rounded-xl transition-all group h-28 sm:h-40"
+        >
+          <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-red-900/20 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500">
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+              <line x1="1" y1="10" x2="23" y2="10"></line>
+            </svg>
+          </div>
+          <span class="font-bold text-[11px] sm:text-sm uppercase tracking-tight text-center leading-tight">KARTY KREDYTOWE</span>
+        </button>
+
+        <!-- Kafel 6: UBEZPIECZENIA -->
+        <button 
+          (click)="initFunnel('UBEZPIECZENIE', 10000, ['Ubezpieczenie samochodu', 'Ubezpieczenie na życie i NNW'])"
+          class="flex flex-col items-center justify-center p-2 sm:p-6 bg-zinc-950 hover:bg-black border border-red-900/50 hover:border-red-500 text-white rounded-xl transition-all group h-28 sm:h-40"
+        >
+          <div class="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-red-900/20 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500">
+              <path d="M23 12a11.05 11.05 0 0 0-22 0zm-5 7a3 3 0 0 1-6 0v-7"></path>
+            </svg>
+          </div>
+          <span class="font-bold text-[11px] sm:text-sm uppercase tracking-tight text-center leading-tight">UBEZPIECZENIA</span>
+        </button>
+      </div>
+      
+      <div class="mt-6 text-center animate-in fade-in duration-500 delay-300">
+        <button 
+          (click)="showFaqModal.set(true)"
+          class="text-zinc-500 hover:text-red-500 text-xs sm:text-sm font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2 mx-auto"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          FAQ / Pytania
+        </button>
+      </div>
+    }
+
+    <!-- Etap 1: Zbieranie Danych -->
+    @if (step() === 1) {
+      <div class="max-w-md mx-auto space-y-2 sm:space-y-4 animate-in slide-in-from-right duration-500">
+
+        <!-- LIMIT KARTY (Tylko dla KARTA) -->
+        @if (funnelType() === 'KARTA') {
+          <div class="text-center mb-2 sm:mb-4">
+            <p class="text-zinc-500 text-[9px] uppercase tracking-widest mb-1">JAKI LIMIT NA KARCIE CHCESZ UZYSKAĆ?</p>
+            <div class="text-xl sm:text-2xl font-black text-white italic">
+              <span>{{ cardLimit() | number:'1.0-0' }}</span> <span class="text-red-600 text-sm">PLN</span>
+            </div>
+            <input type="range" min="1000" max="50000" step="1000" [ngModel]="cardLimit()" (ngModelChange)="cardLimit.set($event)" class="w-full custom-range mt-1">
+          </div>
+        }
+
+        <!-- Pytanie B2B (Fast Track) -->
+        @if (funnelType() === 'FIRMA') {
+          <div class="text-center mb-4">
+            <p class="text-zinc-100 text-sm sm:text-lg font-bold uppercase tracking-widest mb-4">CZEGO POTRZEBUJE TWOJA FIRMA?</p>
+            <div class="grid grid-cols-1 gap-3">
+              <button 
+                (click)="selectB2BOption('KONTO')"
+                class="w-full py-4 sm:py-6 bg-zinc-950 hover:bg-black border-2 border-zinc-800 hover:border-red-600 text-white rounded-2xl transition-all group flex flex-col items-center justify-center gap-2"
+              >
+                <span class="text-sm sm:text-xl font-black uppercase tracking-[0.2em]">KONTO FIRMOWE</span>
+                <span class="text-[9px] text-zinc-500 group-hover:text-red-500 transition-colors">BŁYSKAWICZNE OTWARCIE ONLINE</span>
+              </button>
+              
+              <button 
+                (click)="selectB2BOption('FINANSOWANIE')"
+                class="w-full py-4 sm:py-6 bg-zinc-950 hover:bg-black border-2 border-zinc-800 hover:border-red-600 text-white rounded-2xl transition-all group flex flex-col items-center justify-center gap-2"
+              >
+                <span class="text-sm sm:text-xl font-black uppercase tracking-[0.2em]">FINANSOWANIE</span>
+                <span class="text-[9px] text-zinc-500 group-hover:text-red-500 transition-colors">KREDYT / LEASING / FAKTORING</span>
+              </button>
+            </div>
+          </div>
+        }
+
+        <!-- Pytanie UBEZPIECZENIA (Smart Router) -->
+        @if (funnelType() === 'UBEZPIECZENIE') {
+          <div class="text-center mb-4">
+            <p class="text-zinc-100 text-sm sm:text-lg font-bold uppercase tracking-widest mb-4">CO CHCESZ ZABEZPIECZYĆ?</p>
+            <div class="grid grid-cols-2 gap-3">
+              <button 
+                (click)="selectInsuranceOption('Ubezpieczenie komunikacyjne')"
+                class="aspect-square bg-zinc-950 hover:bg-black border-2 border-zinc-800 hover:border-red-600 text-white rounded-2xl transition-all group flex flex-col items-center justify-center gap-2 p-2"
+              >
+                <span class="text-[10px] sm:text-sm font-black uppercase tracking-widest text-center">AUTO (OC/AC)</span>
+              </button>
+              
+              <button 
+                (click)="selectInsuranceOption('Ubezpieczenie turystyczne')"
+                class="aspect-square bg-zinc-950 hover:bg-black border-2 border-zinc-800 hover:border-red-600 text-white rounded-2xl transition-all group flex flex-col items-center justify-center gap-2 p-2"
+              >
+                <span class="text-[10px] sm:text-sm font-black uppercase tracking-widest text-center">PODRÓŻ</span>
+              </button>
+
+              <button 
+                (click)="selectInsuranceOption('Ubezpieczenie na życie')"
+                class="aspect-square bg-zinc-950 hover:bg-black border-2 border-zinc-800 hover:border-red-600 text-white rounded-2xl transition-all group flex flex-col items-center justify-center gap-2 p-2"
+              >
+                <span class="text-[10px] sm:text-sm font-black uppercase tracking-widest text-center">ŻYCIE / ZDROWIE</span>
+              </button>
+
+              <button 
+                (click)="selectInsuranceOption('Ubezpieczenie nieruchomości')"
+                class="aspect-square bg-zinc-950 hover:bg-black border-2 border-zinc-800 hover:border-red-600 text-white rounded-2xl transition-all group flex flex-col items-center justify-center gap-2 p-2"
+              >
+                <span class="text-[10px] sm:text-sm font-black uppercase tracking-widest text-center">NIERUCHOMOŚĆ</span>
+              </button>
+            </div>
+            <button (click)="reset()" class="w-full mt-6 text-zinc-600 text-[10px] uppercase font-bold hover:text-zinc-400 transition-colors">← Powrót do wyboru</button>
+          </div>
+        }
+
+        <!-- Suwaki (Warunkowe) -->
+        @if (funnelPath() === 'A' && funnelType() !== 'UBEZPIECZENIE') {
+          @if (funnelType() === 'KONSOLIDACJA') {
+            <div class="text-center mb-2 sm:mb-4">
+              <p class="text-zinc-500 text-[9px] uppercase tracking-widest mb-1">SUMA OBECNYCH ZOBOWIĄZAŃ</p>
+              <div class="text-xl sm:text-2xl font-black text-white italic">
+                <span>{{ debtAmount() | number:'1.0-0' }}</span> <span class="text-red-600 text-sm">PLN</span>
+              </div>
+              <input type="range" min="5000" max="500000" step="1000" [ngModel]="debtAmount()" (ngModelChange)="debtAmount.set($event)" class="w-full custom-range mt-1">
+            </div>
+
+            <div class="text-center mb-2 sm:mb-4">
+              <p class="text-zinc-500 text-[9px] uppercase tracking-widest mb-1">WYSOKOŚĆ AKTUALNYCH RAT</p>
+              <div class="text-xl sm:text-2xl font-black text-white italic">
+                <span>{{ currentInstallment() | number:'1.0-0' }}</span> <span class="text-red-600 text-sm">PLN</span>
+              </div>
+              <input type="range" min="100" max="20000" step="50" [ngModel]="currentInstallment()" (ngModelChange)="currentInstallment.set($event)" class="w-full custom-range mt-1">
+            </div>
+          } @else {
+            <div class="text-center mb-2 sm:mb-6">
+              <p class="text-zinc-500 text-[9px] uppercase tracking-widest mb-1">{{ inputLabel() }}</p>
+              <div class="text-2xl sm:text-4xl font-black text-white italic">
+                <span>{{ inputValue() | number:'1.0-0' }}</span> <span class="text-red-600 text-base">PLN</span>
+              </div>
+              <input type="range" [min]="minVal()" [max]="maxVal()" step="100" [ngModel]="inputValue()" (ngModelChange)="inputValue.set($event)" class="w-full custom-range mt-2">
+            </div>
+          }
+
+          <div class="text-center mb-2 sm:mb-6">
+            <p class="text-zinc-500 text-[9px] uppercase tracking-widest mb-1">OKRES SPŁATY (MIESIĄCE)</p>
+            <div class="text-2xl sm:text-4xl font-black text-white italic">
+              <span>{{ monthsValue() }}</span> <span class="text-red-600 text-base">M-CY</span>
+            </div>
+            <input type="range" min="6" max="120" step="1" [ngModel]="monthsValue()" (ngModelChange)="monthsValue.set($event)" class="w-full custom-range mt-2">
+          </div>
+        } 
+
+        <!-- GŁÓWNE ŹRÓDŁO DOCHODU / WIEK -->
+        @if ((funnelPath() === 'A' || funnelPath() === 'B') && funnelType() !== 'UBEZPIECZENIE') {
+          <div class="text-center mb-4 sm:mb-8">
+            @if (funnelType() === 'PREMIA') {
+              <p class="text-zinc-500 text-[9px] uppercase tracking-widest mb-2">TWÓJ PRZEDZIAŁ WIEKOWY:</p>
+              <div class="grid grid-cols-2 gap-2">
+                @for (age of ['PONIŻEJ 18 LAT', '18 – 26 LAT', '26 – 60 LAT', '60+ LAT']; track age) {
+                  <button 
+                    (click)="ageGroup.set(age)"
+                    [class.border-red-600]="ageGroup() === age"
+                    [class.bg-red-900/10]="ageGroup() === age"
+                    [class.text-red-500]="ageGroup() === age"
+                    [class.border-zinc-800]="ageGroup() !== age"
+                    [class.text-zinc-500]="ageGroup() !== age"
+                    class="text-[9px] uppercase tracking-wider font-bold py-2 px-1 border-2 rounded-xl transition-all hover:border-red-800 text-center leading-tight"
+                  >
+                    {{ age }}
+                  </button>
+                }
+              </div>
+            } @else {
+              <p class="text-zinc-500 text-[9px] uppercase tracking-widest mb-2">GŁÓWNE ŹRÓDŁO DOCHODU</p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                @for (type of ['Umowa o pracę / Zlecenie', 'Własna działalność (B2B)', 'Świadczenia (500+, emerytura, inne)', 'Brak udokumentowanego dochodu']; track type) {
+                  <button 
+                    (click)="incomeType.set(type)"
+                    [class.border-red-600]="incomeType() === type"
+                    [class.bg-red-900/10]="incomeType() === type"
+                    [class.text-red-500]="incomeType() === type"
+                    [class.border-zinc-800]="incomeType() !== type"
+                    [class.text-zinc-500]="incomeType() !== type"
+                    class="text-[9px] uppercase tracking-wider font-bold py-2 px-1 border-2 rounded-xl transition-all hover:border-red-800 text-center leading-tight"
+                  >
+                    {{ type }}
+                  </button>
+                }
+              </div>
+            }
+          </div>
+        }
+
+        <!-- CZY MASZ JUŻ KONTO W BANKU? (Tylko dla PREMIA) -->
+        @if (funnelType() === 'PREMIA') {
+          <div class="text-center mb-4">
+            <p class="text-zinc-500 text-[9px] uppercase tracking-widest mb-2">CZY MASZ JUŻ KONTO W BANKU?</p>
+            <div class="grid grid-cols-2 gap-4">
+              <button 
+                (click)="hasExistingAccount.set(true); showBankModal.set(true)"
+                [class.border-red-600]="hasExistingAccount() === true"
+                [class.bg-red-900/10]="hasExistingAccount() === true"
+                [class.text-red-500]="hasExistingAccount() === true"
+                [class.border-zinc-800]="hasExistingAccount() !== true"
+                [class.text-zinc-500]="hasExistingAccount() !== true"
+                class="text-sm font-black py-3 border-2 rounded-xl transition-all uppercase tracking-widest"
+              >
+                TAK
+              </button>
+              <button 
+                (click)="hasExistingAccount.set(false); startAnalysis()"
+                [class.border-red-600]="hasExistingAccount() === false"
+                [class.bg-red-900/10]="hasExistingAccount() === false"
+                [class.text-red-500]="hasExistingAccount() === false"
+                [class.border-zinc-800]="hasExistingAccount() !== false"
+                [class.text-zinc-500]="hasExistingAccount() !== false"
+                class="text-sm font-black py-3 border-2 rounded-xl transition-all uppercase tracking-widest"
+              >
+                NIE
+              </button>
+            </div>
+            @if (excludedBanks().length > 0) {
+              <p class="text-[9px] text-zinc-500 mt-2 uppercase">Wykluczone banki: {{ excludedBanks().length }}</p>
+            }
+          </div>
+        }
+
+        <style>
+          .custom-range { -webkit-appearance: none; background: #27272a; height: 6px; border-radius: 5px; }
+          .custom-range::-webkit-slider-thumb { -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%; background: #dc2626; cursor: pointer; box-shadow: 0 0 10px #dc2626; }
+        </style>
+
+        @if (funnelPath() !== 'C' && funnelType() !== 'PREMIA' && funnelType() !== 'UBEZPIECZENIE') {
+          <button
+            (click)="startAnalysis()"
+            class="w-full py-3 sm:py-5 bg-red-600 hover:bg-red-700 text-white font-black text-lg sm:text-xl rounded-lg uppercase tracking-widest transition-all duration-300 shadow-[0_0_20px_rgba(220,38,38,0.5)] hover:shadow-[0_0_35px_rgba(220,38,38,0.8)] active:scale-[0.98]"
+          >
+            SPRAWDŹ OFERTY
+          </button>
+        }
+
+        @if (funnelType() === 'FIRMA') {
+          <button (click)="reset()" class="w-full mt-4 text-zinc-600 text-[10px] uppercase font-bold hover:text-zinc-400 transition-colors">← Powrót do wyboru</button>
+        }
+        
+        @if (funnelType() === 'PREMIA' && hasExistingAccount() !== null) {
+          <button
+            (click)="startAnalysis()"
+            class="w-full py-3 sm:py-5 bg-red-600 hover:bg-red-700 text-white font-black text-lg sm:text-xl rounded-lg uppercase tracking-widest transition-all duration-300 shadow-[0_0_20px_rgba(220,38,38,0.5)] hover:shadow-[0_0_35px_rgba(220,38,38,0.8)] active:scale-[0.98]"
+          >
+            SPRAWDŹ OFERTY
+          </button>
+        }
+        
+        <button 
+          (click)="reset()" 
+          class="w-full text-zinc-600 text-[10px] uppercase font-bold hover:text-zinc-400 transition-colors flex items-center justify-center gap-2"
+        >
+          ← Powrót do wyboru
+        </button>
+      </div>
+    }
+
+    <!-- Etap 2: Ekran Analizy (Bufor Napięcia) -->
+    @if (step() === 2) {
+      <div class="max-w-md mx-auto flex flex-col items-center justify-center py-4 space-y-4 h-32">
+        <div class="w-12 h-12 border-4 border-zinc-800 border-t-red-600 rounded-full animate-spin shadow-[0_0_20px_rgba(220,38,38,0.6)]"></div>
+        <p class="text-red-500 font-mono text-xs uppercase tracking-widest text-center h-6 animate-pulse">
+          {{ loadingText() }}
+        </p>
+      </div>
+    }
+
+    <!-- Etap 3: Raport Końcowy -->
+    @if (step() === 3) {
+      <div class="max-w-md mx-auto text-center py-2 animate-in zoom-in duration-500">
+        <h3 class="text-red-600 font-black text-lg sm:text-xl uppercase tracking-widest mb-1 drop-shadow-[0_0_15px_rgba(220,38,38,0.8)]">
+          Zdolność Potwierdzona
+        </h3>
+        <p class="text-zinc-400 text-[9px] uppercase tracking-widest mb-2">WSTĘPNIE ZATWIERDZONA KWOTA:</p>
+        <div class="text-3xl sm:text-5xl font-black text-white drop-shadow-md mb-4 tabular-nums tracking-tighter">
+          {{ profitDisplay() | number:'1.0-0' }} PLN
+        </div>
+        
+        <div class="text-left bg-black/40 p-3 rounded-lg border border-zinc-800 mb-4 space-y-1 text-[11px] sm:text-sm">
+           <p class="text-zinc-300">✓ Wstępna decyzja w 15 minut</p>
+           <p class="text-zinc-300">✓ Zapytanie nie obniża Twojego BIK</p>
+
+        </div>
+
+        @if (bestOffer()) {
+          <div class="bg-zinc-800/50 p-3 rounded-lg mb-4 text-left border border-zinc-700/50">
+            <h4 class="text-base sm:text-xl font-bold text-zinc-100 mb-1">{{ bestOffer()!.offererName }}</h4>
+            <p class="text-zinc-400 text-[10px] sm:text-sm mb-2">{{ bestOffer()!.offerName }}</p>
+            <div class="space-y-1 text-[11px] sm:text-sm">
+              <div class="flex justify-between">
+                <span class="text-zinc-500">RRSO:</span>
+                <span class="font-bold text-red-400">{{ bestOffer()!.apr | number:'1.2-2' }}%</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-zinc-500">Okres spłaty:</span>
+                <span class="font-bold text-zinc-100">{{ monthsValue() }} rat</span>
+              </div>
+              @if (bestOffer()!.monthlyPayment) {
+                <div class="flex justify-between">
+                  <span class="text-zinc-500">Miesięczna rata:</span>
+                  <span class="font-bold text-zinc-100">{{ bestOffer()!.monthlyPayment | number:'1.2-2' }} PLN</span>
+                </div>
+              }
+              @if (funnelType() === 'GOTÓWKA') {
+                <div class="text-right mt-2">
+                  <span class="text-[#10B981] font-bold text-xs sm:text-sm drop-shadow-[0_0_8px_rgba(16,185,129,0.3)]">
+                    Teraz taniej o {{ savingsAmount() | number:'1.0-0' }} PLN
+                  </span>
+                </div>
+              }
+              @if (funnelType() === 'KONSOLIDACJA' && consolidationSaving() > 0) {
+                <div class="text-right mt-2">
+                  <span class="text-[#10B981] font-bold text-xs sm:text-sm drop-shadow-[0_0_8px_rgba(16,185,129,0.3)]">
+                    Obniżasz swoją ratę o {{ consolidationSaving() | number:'1.0-0' }} PLN co miesiąc
+                  </span>
+                </div>
+              }
+            </div>
+          </div>
+          
+          <p class="text-red-500 text-[9px] font-bold mb-3 animate-pulse">
+            ⚠️ Oferta wygasa za: {{ formattedTimeLeft() }}
+          </p>
+
+          <a [href]="bestOffer()!.url + (getEpi() ? '?epi=' + getEpi() : '')" 
+             target="_blank" 
+             class="block w-full py-3 sm:py-5 bg-red-600 hover:bg-red-700 text-white font-black text-lg sm:text-xl rounded-lg uppercase tracking-widest transition-all shadow-[0_0_25px_rgba(220,38,38,0.7)] text-center">
+            Aktywuj Ofertę Teraz
+          </a>
+          <button (click)="reset()" class="w-full mt-3 text-zinc-600 text-[10px] uppercase font-bold hover:text-zinc-400 transition-colors">← Powrót do wyboru</button>
+        } @else {
+          <p class="text-zinc-400 mb-4 text-sm sm:text-base">Brak ofert spełniających kryteria.</p>
+          <button (click)="reset()" class="w-full py-3 sm:py-5 bg-zinc-700 hover:bg-zinc-600 text-white font-black text-lg sm:text-xl rounded-lg uppercase tracking-widest transition-all">
+            Spróbuj Ponownie
+          </button>
+        }
+      </div>
+    }
+    
+    <!-- Etap 5: Lista Ofert (Konto Firmowe) -->
+    @if (step() === 5) {
+      <div class="max-w-md mx-auto animate-in slide-in-from-bottom duration-500">
+        <div class="text-center mb-6">
+          <h3 class="text-xl sm:text-2xl font-black text-white uppercase tracking-tighter italic">Dostępne Konta Firmowe</h3>
+          <div class="h-1 w-12 bg-red-600 mx-auto mt-2"></div>
+        </div>
+
+        <div class="space-y-3 max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar mb-6">
+          @for (offer of allOffers(); track offer.campaignId) {
+            <div class="bg-zinc-950 border border-zinc-800 rounded-xl p-3 flex items-center gap-3 hover:border-red-600/50 transition-all group">
+              <!-- Logo (Placeholder/Initial) -->
+              <div class="w-10 h-10 sm:w-12 sm:h-12 bg-zinc-900 rounded-lg flex items-center justify-center border border-zinc-800 shrink-0 group-hover:border-red-600/30 transition-colors">
+                <span class="text-red-600 font-black text-lg sm:text-xl">{{ offer.offererName?.charAt(0) }}</span>
+              </div>
+              
+              <!-- Content -->
+              <div class="flex-1 min-w-0">
+                <h4 class="text-white font-bold text-xs sm:text-sm truncate uppercase tracking-tight">{{ offer.offererName }}</h4>
+                <p class="text-zinc-500 text-[10px] sm:text-xs truncate">{{ offer.offerName }}</p>
+                <p class="text-[#10B981] text-[9px] sm:text-[10px] font-bold uppercase mt-0.5">Darmowe prowadzenie</p>
+              </div>
+
+              <!-- Action -->
+              <a [href]="offer.url + (getEpi() ? '?epi=' + getEpi() : '')" 
+                 target="_blank"
+                 class="bg-red-600 hover:bg-red-700 text-white text-[10px] sm:text-xs font-black py-2 px-4 rounded-lg uppercase tracking-widest transition-all shrink-0 shadow-[0_0_15px_rgba(220,38,38,0.3)]">
+                Wybierz
+              </a>
+            </div>
+          } @empty {
+            <p class="text-zinc-500 text-center py-10 font-mono text-sm uppercase tracking-widest">Brak aktywnych ofert w tej kategorii</p>
+          }
+        </div>
+
+        <button (click)="reset()" class="w-full text-zinc-600 text-[10px] uppercase font-bold hover:text-zinc-400 transition-colors text-center block">
+          ← Powrót do wyboru
+        </button>
+      </div>
+    }
+
+    <!-- Etap 4: Downsell (Protokół Awaryjny) -->
+    @if (step() === 4) {
+      <div class="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center p-6 text-center animate-in fade-in duration-300">
+        <div class="w-24 h-24 mb-8 text-red-600 animate-pulse">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </div>
+        <h2 class="text-2xl sm:text-4xl font-black text-red-600 uppercase tracking-tighter mb-6 animate-pulse">
+          Weryfikacja bankowa wstrzymana
+        </h2>
+        <p class="text-zinc-400 font-mono text-sm sm:text-lg uppercase tracking-widest max-w-2xl leading-relaxed">
+          Uruchamiam protokół awaryjny: Wstrzymanie egzekucji i Czyszczenie BIK...
+        </p>
+        <div class="mt-12 flex gap-2">
+          <div class="w-2 h-2 bg-red-600 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+          <div class="w-2 h-2 bg-red-600 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+          <div class="w-2 h-2 bg-red-600 rounded-full animate-bounce"></div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- MODAL BANKÓW -->
+  @if (showBankModal()) {
+    <div class="fixed inset-0 z-[200] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-300">
+      <div class="w-full max-w-sm bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex flex-col max-h-[90vh]">
+        <div class="text-center mb-4">
+          <p class="text-zinc-500 text-[10px] uppercase tracking-widest mb-1">Wskaż swoje obecne banki</p>
+          <div class="h-px w-12 bg-red-600 mx-auto"></div>
+        </div>
+
+        <div class="relative mb-4">
+          <input 
+            type="text" 
+            [ngModel]="manualBankInput()" 
+            (ngModelChange)="manualBankInput.set($event)"
+            (keyup.enter)="addManualBank()"
+            placeholder="Wpisz nazwę banku (opcjonalnie)"
+            class="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-3 px-4 text-xs text-white placeholder:text-zinc-600 focus:outline-none focus:border-red-600 transition-colors"
+          >
+          <button (click)="addManualBank()" class="absolute right-2 top-1/2 -translate-y-1/2 text-red-600 p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </button>
+        </div>
+
+        <div class="flex-1 overflow-y-auto space-y-1 pr-2 custom-scrollbar">
+          @for (bank of polishBanks; track bank) {
+            <button 
+              (click)="toggleBank(bank)"
+              [class.bg-red-900/20]="excludedBanks().includes(bank)"
+              [class.border-red-600/50]="excludedBanks().includes(bank)"
+              [class.text-red-500]="excludedBanks().includes(bank)"
+              [class.border-zinc-800]="!excludedBanks().includes(bank)"
+              [class.text-zinc-400]="!excludedBanks().includes(bank)"
+              class="w-full text-left py-2.5 px-3 border rounded-lg text-xs font-medium transition-all flex justify-between items-center"
+            >
+              {{ bank }}
+              @if (excludedBanks().includes(bank)) {
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              }
+            </button>
+          }
+        </div>
+
+        <button 
+          (click)="showBankModal.set(false)"
+          class="w-full mt-6 py-4 bg-red-600 text-white font-black text-sm rounded-xl uppercase tracking-widest shadow-[0_0_20px_rgba(220,38,38,0.4)]"
+        >
+          ZATWIERDŹ I WRÓĆ
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- MODAL FAQ -->
+  @if (showFaqModal()) {
+    <div class="fixed inset-0 z-[200] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-300">
+      <div class="w-full max-w-sm bg-zinc-900 border border-zinc-800 rounded-2xl p-6 flex flex-col max-h-[90vh]">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-white font-black uppercase tracking-widest text-lg">FAQ / Pytania</h3>
+          <button (click)="showFaqModal.set(false)" class="text-zinc-500 hover:text-red-500 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="h-px w-12 bg-red-600 mb-4"></div>
+
+        <div class="flex-1 overflow-y-auto space-y-4 pr-2 custom-scrollbar text-left">
+          <div>
+            <h4 class="text-red-500 font-bold text-sm mb-1 uppercase tracking-tight">Jak działa kalkulator?</h4>
+            <p class="text-zinc-400 text-xs leading-relaxed">Nasz system analizuje Twoje podstawowe dane i przy użyciu zaawansowanych algorytmów dopasowuje najlepsze oferty instytucji finansowych dostępne na rynku.</p>
+          </div>
+          <div>
+            <h4 class="text-red-500 font-bold text-sm mb-1 uppercase tracking-tight">Czy to zapytanie obniża mój BIK?</h4>
+            <p class="text-zinc-400 text-xs leading-relaxed">Nie. Korzystanie z naszego kalkulatora to symulacja i nie generuje zapytań w Biurze Informacji Kredytowej. Twój scoring pozostaje bezpieczny.</p>
+          </div>
+          <div>
+            <h4 class="text-red-500 font-bold text-sm mb-1 uppercase tracking-tight">Czy oferty są wiążące?</h4>
+            <p class="text-zinc-400 text-xs leading-relaxed">Prezentowane oferty mają charakter informacyjny i stanowią wstępną propozycję. Ostateczna decyzja kredytowa zależy od wybranej instytucji po pełnej weryfikacji.</p>
+          </div>
+          <div>
+            <h4 class="text-red-500 font-bold text-sm mb-1 uppercase tracking-tight">Jakie dane są wymagane?</h4>
+            <p class="text-zinc-400 text-xs leading-relaxed">Do wstępnej symulacji potrzebujemy tylko podstawowych informacji o dochodach, wieku i kwocie. Nie prosimy o PESEL ani dane z dowodu osobistego na tym etapie.</p>
+          </div>
+          <div>
+            <h4 class="text-red-500 font-bold text-sm mb-1 uppercase tracking-tight">Czy usługa jest darmowa?</h4>
+            <p class="text-zinc-400 text-xs leading-relaxed">Tak, korzystanie z naszego kalkulatora i porównywarki jest całkowicie bezpłatne dla użytkowników.</p>
+          </div>
+        </div>
+
+        <button 
+          (click)="showFaqModal.set(false)"
+          class="w-full mt-6 py-4 bg-red-600 text-white font-black text-sm rounded-xl uppercase tracking-widest shadow-[0_0_20px_rgba(220,38,38,0.4)]"
+        >
+          ZAMKNIJ
+        </button>
+      </div>
+    </div>
+  }
+
+  <style>
+    .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #27272a; border-radius: 10px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+  </style>
+</div>
