@@ -1,19 +1,34 @@
-import { getBestOffer } from "./aiEngine.js"
+export function routeOffer(req, offers){
 
-export function routeOffer(req,stats){
+  const user = req.query
 
-    const user = {
+  let filtered = offers.filter(o => {
 
-        country: req.headers["cf-ipcountry"] || "US",
+    if(user.goal === "cash" && !o.category.includes("pozyczki")) return false
+    if(user.score === "bad" && o.type === "bank") return false
+    if(user.time === "fast" && o.speed !== "instant") return false
 
-        device: req.headers["user-agent"].includes("Mobile")
-        ? "mobile"
-        : "desktop"
+    return true
+  })
 
-    }
+  if(filtered.length === 0){
+    return offers.sort((a,b)=>(b.epc||0)-(a.epc||0))[0]
+  }
 
-    const offer = getBestOffer(user,stats)
+  function scoreOffer(o){
+    let score = 0
 
-    return offer
+    if(user.goal === "cash") score += 20
+    if(user.time === "fast" && o.speed === "instant") score += 15
+    if(user.score === "bad" && o.type !== "bank") score += 15
+    if(user.amount === "big") score += 10
 
+    score += (o.epc || 0) * 5
+
+    return score
+  }
+
+  filtered.sort((a,b)=>scoreOffer(b)-scoreOffer(a))
+
+  return filtered[0]
 }
